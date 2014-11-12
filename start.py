@@ -2,11 +2,12 @@
 
 from flask import Flask
 from flask import render_template
+
+from collections import OrderedDict
+import datetime
 import gevent
 from gevent import monkey, Timeout
-
 import json
-import datetime
 import urllib.request
 
 monkey.patch_all()
@@ -54,11 +55,11 @@ def get_commits():
         job_stack = [gevent.spawn(download(url)) for url in urls]
         gevent.joinall(job_stack)
     except Timeout:
-        pass # return render_template('start.html', cntx=result)
+        pass
     finally:
         timeout.cancel()
-
-    return render_template('start.html', cntx=result)
+    cntx = OrderedDict(sorted(result.items()))
+    return render_template('start.html', cntx=cntx)
     print('End - {0}'.format(datetime.datetime.now()))
 
 
@@ -66,5 +67,5 @@ if __name__ == '__main__':
 
     for i in range(1, 70):
         urls.append(url_list_commits.format(i))
-        result[url_list_commits.format(i)] = [None, None]
+        result[url_list_commits.format(i)] = ['dont get', 'emtpy']
     app.run(debug=True)

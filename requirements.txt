@@ -3,8 +3,7 @@ Flask==0.10.1
 Jinja2==2.7.3
 MarkupSafe==0.23
 Werkzeug==0.9.6
+-e git+https://github.com/fantix/gevent.git@71dd2d4d1d3332ed87f79c19d54d97bdcacdcf6d#egg=gevent-master
+greenlet==0.4.5
 itsdangerous==0.24
 
-####
-
--e git+https://github.com/fantix/gevent.git#egg=gevent
